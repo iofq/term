@@ -29,8 +29,8 @@ RUN curl -Lo rg.tgz https://github.com/BurntSushi/ripgrep/releases/download/13.0
 
 # Run PackerInstall & TSUpdate
 RUN $NVIM --headless -c "autocmd User PackerComplete quitall"
-# RUN $NVIM --headless -c ":TSInstallSync $TREESITTER_INSTALL | qall"
-# RUN $NVIM --headless -c ":GoInstallBinaries" -c "qall"
+RUN $NVIM --headless -c ":TSInstallSync $TREESITTER_INSTALL | qall"
+RUN $NVIM --headless -c ":GoInstallBinaries" -c "qall"
 
 # archive home directory for portability
 RUN tar -cvzhf /tmp/term.tgz --exclude ~/.profile --exclude ~/.cache ~/ && mv /tmp/term.tgz ~/term.tgz
