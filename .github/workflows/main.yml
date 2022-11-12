@@ -38,7 +38,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: ${{ steps.extract.outputs.destination }}
-          name: term-${{ github.event.repository.updated_at}}.tar.gz
+          name: term.tar.gz
   benchmark:
     runs-on: ubuntu-latest
 
