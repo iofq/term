@@ -5,12 +5,11 @@ ARG NVIM="/root/.local/bin/nvim"
 ARG TREESITTER_INSTALL="go php bash yaml json javascript python dockerfile hcl"
 
 WORKDIR /root
-COPY . .
 RUN mkdir $GOPATH
 
-# RUN cd && git clone https://github.com/iofq/term && \
-#   cd term && \
-#   ./install -f
+RUN cd && git clone https://github.com/iofq/term && \
+  cd term && \
+  ./install -f
 
 # Install nightly neovim
 RUN curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz && \
@@ -30,11 +29,10 @@ RUN curl -Lo rg.tgz https://github.com/BurntSushi/ripgrep/releases/download/13.0
 
 # Run PackerInstall & TSUpdate
 RUN $NVIM --headless -c "autocmd User PackerComplete quitall"
-RUN $NVIM --headless -c ":TSInstallSync $TREESITTER_INSTALL | qall"
-RUN $NVIM --headless -c ":GoInstallBinaries" -c "qall"
+# RUN $NVIM --headless -c ":TSInstallSync $TREESITTER_INSTALL | qall"
+# RUN $NVIM --headless -c ":GoInstallBinaries" -c "qall"
 
 # archive home directory for portability
-# docker cp <id>:/home/e/dots.tgz .
-# RUN tar -cvzhf /tmp/dots.tgz ~/ && mv /tmp/dots.tgz ~/dots.tgz
+RUN tar -cvzhf /tmp/term.tgz --exclude ~/.profile --exclude ~/.cache ~/ && mv /tmp/term.tgz ~/term.tgz
 
 ENTRYPOINT ["bash"]
