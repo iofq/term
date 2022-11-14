@@ -11,5 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Tag and push current repo code
         run: |
+          git config --global user.name "CI"
+          git config --global user.email "iofq@users.noreply.github.com"
           git tag -fa latest
           git push origin master --tags
