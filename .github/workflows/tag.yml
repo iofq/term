@@ -1,0 +1,15 @@
+name: tag
+on:
+  push:
+    branches:
+      - master
+jobs:
+  tag_repo:
+    name: 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Tag and push current repo code
+        run: |
+          git tag -fa latest
+          git push origin master --tags

@@ -17,7 +17,7 @@ RUN curl -L https://github.com/iofq/term/tarball/master \
 # Install nightly neovim
 RUN .local/bin/update-nvim
 # Install latest golang & golang packages
-RUN .local/bin/update-go
+RUN .local/bin/update-go >/dev/null
 # Install binaries
 RUN bash .local/bin/update-binaries
 
@@ -27,12 +27,14 @@ RUN $NVIM --headless -c ":TSInstallSync $TREESITTER_INSTALL | qall"
 RUN $NVIM --headless -c ":GoInstallBinaries" -c "qall"
 
 # archive home directory for portability
-RUN GZIP=-9 tar -cvzhf /tmp/term.tgz \
+RUN tar cvhf /tmp/term.tgz \
+    -I "gzip --best" \
+    --sort='name' \
     --exclude .profile \
     --exclude .github \
     --exclude Dockerfile \
     --exclude README.md \
-    --exclude .cache -C ~/ . && \
+    --exclude .cache -C ~/ . > /dev/null && \
     mv /tmp/term.tgz ~/term.tgz
 
 ENTRYPOINT ["bash"]

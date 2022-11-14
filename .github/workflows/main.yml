@@ -2,10 +2,8 @@ name: build
 
 on:
   push:
-    branches:
-      - master
-      - dev
-
+    tags:
+      - '*'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -41,7 +39,6 @@ jobs:
           GHR_PATH: ${{ steps.extract.outputs.destination }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GHR_REPLACE: true
-
   benchmark:
     runs-on: ubuntu-latest
     steps:
