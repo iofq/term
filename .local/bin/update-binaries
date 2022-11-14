@@ -1,8 +1,10 @@
 #!/bin/bash
 (
 cd ~/
-curl -Lo rg.tgz https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep-13.0.0-x86_64-unknown-linux-musl.tar.gz
-tar xzvf rg.tgz -C ~/rg --strip-components 1
-rm -rf rg.tgz
-mv ~/rg/rg ~/.local/bin/
+curl -Lo rg.tgz https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep-13.0.0-x86_64-unknown-linux-musl.tar.gz && \
+    tar -xvzf rg.tgz --strip-components 1 \
+    --wildcards \
+    --no-anchored "*/rg" && \
+    rm -f rg.tgz && \
+    mv rg ~/.local/bin/
 )
