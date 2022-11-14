@@ -1,10 +1,15 @@
-FROM docker.io/golang:bullseye
+FROM docker.io/debian:bullseye
 
 ARG TREESITTER_INSTALL="go php bash yaml json javascript python dockerfile hcl"
 ARG GOROOT=/root/go
 ARG GOPATH=/root/go
+ENV NVIM=/root/.local/bin/nvim
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /root
+
+RUN apt update && apt install -y git bash curl
 
 RUN git clone https://github.com/iofq/term && \
   cd term && \
