@@ -34,14 +34,17 @@ jobs:
           image: ghcr.io/iofq/term:latest
           path: /root/term.tgz
       -
-        name: Upload .tar.gz as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          path: ${{ steps.extract.outputs.destination }}
-          name: term.tar.gz
+        name: Release .tar.gz
+        needs: extract
+        if: github.ref == 'refs/heads/master'
+        uses: fnkr/github-action-ghr@v1
+        env:
+          GHR_PATH: ${{ steps.extract.outputs.destination }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GHR_REPLACE: true
+
   benchmark:
     runs-on: ubuntu-latest
-
     steps:
       - name: Install dependancies
         run: sudo apt install neovim g++
