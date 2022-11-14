@@ -16,4 +16,4 @@ jobs:
           git config --global user.name "CI"
           git config --global user.email "iofq@users.noreply.github.com"
           git tag -f latest
-          git push origin master --tags
+          git push -f origin master --tags
