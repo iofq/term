@@ -9,7 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /root
 
-RUN apt update && apt install -y git bash curl
+RUN apt update && apt install -y git bash curl gcc g++
 
 RUN git clone https://github.com/iofq/term && \
   cd term && \
@@ -28,7 +28,7 @@ RUN $NVIM --headless -c ":TSInstallSync $TREESITTER_INSTALL | qall"
 RUN $NVIM --headless -c ":GoInstallBinaries" -c "qall"
 
 # archive home directory for portability
-RUN tar -cvzhf /tmp/term.tgz \
+RUN GZIP=-9 tar -cvzhf /tmp/term.tgz \
     --exclude ~/.profile \
     --exclude ~/.cache ~/ && \
     mv /tmp/term.tgz ~/term.tgz
