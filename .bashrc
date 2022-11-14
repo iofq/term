@@ -46,7 +46,7 @@ alias la='/bin/ls -lahrt --color=auto'
 alias ll='la'
 alias tmux='tmux new -As0'
 alias :q="exit"
-alias vim="$EDITOR"
+alias vim='$EDITOR'
 alias mpv="mpv --no-keepaspect-window"
 alias sus="systemctl suspend"
 alias gitu='git add . && git commit && git push'

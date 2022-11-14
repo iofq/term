@@ -35,7 +35,6 @@ jobs:
           path: /root/term.tgz
       -
         name: Release .tar.gz
-        if: github.ref == 'refs/heads/master'
         uses: fnkr/github-action-ghr@v1
         env:
           GHR_PATH: ${{ steps.extract.outputs.destination }}

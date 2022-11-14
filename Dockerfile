@@ -1,24 +1,23 @@
-FROM docker.io/debian:bullseye
+FROM docker.io/debian:bullseye-slim
 
 ARG TREESITTER_INSTALL="go php bash yaml json javascript python dockerfile hcl"
-ARG GOROOT=/root/go
 ARG GOPATH=/root/go
 ENV NVIM=/root/.local/bin/nvim
+ENV PATH="/root/go/bin:$PATH"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /root
 
-RUN apt update && apt install -y git bash curl gcc g++
+RUN apt update && apt install -y curl g++ git
 
-RUN git clone https://github.com/iofq/term && \
-  cd term && \
-  bash ./install -f
+RUN curl -L https://github.com/iofq/term/tarball/master \
+  | tar xz --strip-components 1
 
 # Install nightly neovim
-RUN bash .local/bin/update-nvim
+RUN .local/bin/update-nvim
 # Install latest golang & golang packages
-RUN bash .local/bin/update-go
+RUN .local/bin/update-go
 # Install binaries
 RUN bash .local/bin/update-binaries
 
@@ -29,8 +28,11 @@ RUN $NVIM --headless -c ":GoInstallBinaries" -c "qall"
 
 # archive home directory for portability
 RUN GZIP=-9 tar -cvzhf /tmp/term.tgz \
-    --exclude ~/.profile \
-    --exclude ~/.cache ~/ && \
+    --exclude .profile \
+    --exclude .github \
+    --exclude Dockerfile \
+    --exclude README.md \
+    --exclude .cache -C ~/ . && \
     mv /tmp/term.tgz ~/term.tgz
 
 ENTRYPOINT ["bash"]
