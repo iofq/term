@@ -13,5 +13,5 @@ jobs:
         run: |
           git config --global user.name "CI"
           git config --global user.email "iofq@users.noreply.github.com"
-          git tag -fa latest
+          git tag -f latest
           git push origin master --tags
