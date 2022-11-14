@@ -1,0 +1,9 @@
+#!/bin/bash
+(
+cd ~/
+curl -Lo go.tar.gz  "https://dl.google.com/go/$(curl https://golang.org/VERSION?m=text).linux-amd64.tar.gz"
+tar xzvf go.tar.gz
+rm go.tar.gz
+
+go install github.com/junegunn/fzf@latest
+)
