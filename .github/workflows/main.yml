@@ -33,11 +33,12 @@ jobs:
           path: /root/term.tgz
       -
         name: Upload archive to release
-        uses: svenstaro/upload-release-action@v2
+        uses: xresloader/upload-to-github-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ steps.extract.outputs.destination }}
-          tag: latest
+          update_latest_release: true
           overwrite: true
   benchmark:
     runs-on: ubuntu-latest
